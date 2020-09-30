@@ -67,15 +67,16 @@ public class Task01 {
 	 * @return произведение матриц
 	 */
 	public static int[][] productMatrix(int[][] one, int[][] two) {
-		//допустим что матрици одного размера
-		int[][] arr = new int [one.length][one[0].length];
-		for (int i = 0; i < one.length; i++) {
-			for (int j = 0; j < one[0].length; j++) {
-				arr[i][j] = one[i][j] * two[j][i];
+		int[][] arr = new int[one.length][two[0].length];
+		for (int i = 0; i < one.length ; i++) {//результирующая матрица [x][]
+			for (int j = 0; j < two[0].length; j++) {//результирующая матрица [][x]
+				for (int k = 0; k < two.length; k++) {//смещение по двум исходным матрицам
+					arr[i][j] += one[i][k] * two[k][j];
+				}
 			}
 		}
 
-		return one;
+		return arr;
 	}
 
 	/**
@@ -106,17 +107,21 @@ public class Task01 {
 		}
 		int ans = 0;
 		for (int i = 0; i < len; i++) {//доп минор по одному
-			for (int j = 1; j < len; j++) {//строки минора (j = 1 пропуск 1 строки для минора)
-				for (int k = 0; k < len; k++) {//колоны минора
+			int[][] arr = new int[len - 1][len - 1];
+			for (int j = 1, j1 = 0; j < len; j++, j1++) {//строки минора (j = 1 пропуск 1 строки для минора)
+				for (int k = 0, k1 = 0; k < len ; k++) {//колоны минора
 					if (k == i){//пропуск i столбца для минора
 						continue;
 					}
-					ans = ans + matrix[0][i] * determinant();//а все шло так хорошо
+					arr[j1][k1] = matrix[j][k];//вот самому стыдно столько памяти выедать, но руки кривые
+					//я так понял по хорошему тут надо на Arrey.List переделать? Чтоб избавится от костыля.
+					k1++;//три раза выражение переставлял, пока правильное место не нашел
 				}
 			}
+			ans = ans + matrix[0][i] * determinant(arr) * ((i % 2 == 1)? -1: 1);
 		}
-		
-		return 0;
+
+		return ans;
 	}
 
 	/**
