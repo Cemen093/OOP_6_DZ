@@ -67,6 +67,14 @@ public class Task01 {
 	 * @return произведение матриц
 	 */
 	public static int[][] productMatrix(int[][] one, int[][] two) {
+		//допустим что матрици одного размера
+		int[][] arr = new int [one.length][one[0].length];
+		for (int i = 0; i < one.length; i++) {
+			for (int j = 0; j < one[0].length; j++) {
+				arr[i][j] = one[i][j] * two[j][i];
+			}
+		}
+
 		return one;
 	}
 
@@ -77,7 +85,6 @@ public class Task01 {
 	 * @return произведение матрицы на скаляр
 	 */
 	public static int[][] productMatrix(int[][] matrix, int num) {
-		//допустим что скаляр это число
 		int[][] arr = new int[matrix.length][matrix[0].length];
 		for (int i = 0; i < matrix.length ; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
@@ -93,6 +100,22 @@ public class Task01 {
 	 * @return детерминант матрицы
 	 */
 	public static int determinant(int[][] matrix) {
+		int len = matrix.length;
+		if (len == 1) {
+			return matrix[0][0];//решение для матрици 1х1 и выход из рекурсии
+		}
+		int ans = 0;
+		for (int i = 0; i < len; i++) {//доп минор по одному
+			for (int j = 1; j < len; j++) {//строки минора (j = 1 пропуск 1 строки для минора)
+				for (int k = 0; k < len; k++) {//колоны минора
+					if (k == i){//пропуск i столбца для минора
+						continue;
+					}
+					ans = ans + matrix[0][i] * determinant();//а все шло так хорошо
+				}
+			}
+		}
+		
 		return 0;
 	}
 
