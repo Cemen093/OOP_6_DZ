@@ -1,5 +1,9 @@
 package ua.step.homework;
 
+
+import java.util.Arrays;
+import java.util.Collections;
+
 /**
  * В массиве хранится n явно заданных текстовых строк.
  * <p>
@@ -23,8 +27,12 @@ public class Task02 {
      * @return строка состоящая из элементов массив
      */
     public static String join(String[] strings) {
-        // TODO: удалите исключение и пишите здесь код
-        throw new RuntimeException("Not implemented yet");
+        String s = new String();
+        for (int i = 0; i < strings.length - 1; i++) {
+            s += strings[i] + " ";
+        }
+        s += strings[strings.length - 1];
+        return s;
     }
 
     /**
@@ -35,8 +43,12 @@ public class Task02 {
      * @return строка состоящая из элементов массива
      */
     public static String join(String[] strings, String glue) {
-        // TODO: удалите исключение и пишите здесь код
-        throw new RuntimeException("Not implemented yet");
+        String s = new String();
+        for (int i = 0; i < strings.length - 1; i++) {
+            s += strings[i] + glue;
+        }
+        s += strings[strings.length -1];
+        return s;
     }
 
     /**
@@ -45,8 +57,7 @@ public class Task02 {
      * @param strings - массив строк для сортировки
      */
     public static void sortDesc(String[] strings) {
-        // TODO: удалите исключение и пишите здесь код
-        throw new RuntimeException("Not implemented yet");
+        Arrays.sort(strings, Collections.reverseOrder());
     }
 
     /**
