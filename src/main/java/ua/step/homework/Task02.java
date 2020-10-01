@@ -47,7 +47,7 @@ public class Task02 {
         for (int i = 0; i < strings.length - 1; i++) {
             s += strings[i] + glue;
         }
-        s += strings[strings.length -1];
+        s += strings[strings.length - 1];
         return s;
     }
 
@@ -66,26 +66,25 @@ public class Task02 {
      * @param strings - массив строк для сортировки
      */
     public static void sortByWordCount(String[] strings) {
-            Comparator<String> stringLengthComparator = new StringLengthSort();
-            Arrays.sort(strings, stringLengthComparator);
-            for(String str : strings){
-                System.out.println(str);
-            }
-        
-    }
-
-    static class StringLengthSort implements Comparator<String>{
-        @Override
-        public int compare(String o1, String o2) {
-            if(o1.length() > o2.length()){
-                return 1;
-            }else{
-                if(o1.length() < o2.length()){
-                    return -1;
-                }else{
-                    return 0;
+        Comparator<String> stringLengthComparator = new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                if (s1.length() > s2.length()) {
+                    return 1;
+                } else {
+                    if (s1.length() < s2.length()) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
                 }
             }
+
+        };//;)
+        Arrays.sort(strings, stringLengthComparator);
+        for (String str : strings) {
+            System.out.println(str);
         }
+
     }
 }
