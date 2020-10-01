@@ -1,8 +1,8 @@
 package ua.step.homework;
 
-
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * В массиве хранится n явно заданных текстовых строк.
@@ -66,7 +66,26 @@ public class Task02 {
      * @param strings - массив строк для сортировки
      */
     public static void sortByWordCount(String[] strings) {
-        // TODO: удалите исключение и пишите здесь код
-        throw new RuntimeException("Not implemented yet");
+            Comparator<String> stringLengthComparator = new StringLengthSort();
+            Arrays.sort(strings, stringLengthComparator);
+            for(String str : strings){
+                System.out.println(str);
+            }
+        
+    }
+
+    static class StringLengthSort implements Comparator<String>{
+        @Override
+        public int compare(String o1, String o2) {
+            if(o1.length() > o2.length()){
+                return 1;
+            }else{
+                if(o1.length() < o2.length()){
+                    return -1;
+                }else{
+                    return 0;
+                }
+            }
+        }
     }
 }
