@@ -22,15 +22,15 @@ public class Task03Test {
 
     @Test
     void testIsPalindrome() {
+        String expeption = "12421";
         String actual = Task03.makePalindrome("1235421");
-        String expected = "12421";
-        Assertions.assertEquals(actual, expected);
+        Assertions.assertEquals(expeption,actual);
     }
 
     @Test
     void testPalindromeLetters() {
+        String expeption = "hellosolleh";
         String actual = Task03.makePalindrome("henllovsollmeh");
-        String expected = "hellosolleh";
-        Assertions.assertEquals(actual, expected);
+        Assertions.assertEquals(expeption,actual);
     }
 }

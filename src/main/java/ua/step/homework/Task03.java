@@ -12,7 +12,6 @@ package ua.step.homework;
  */
 public class Task03 {
     public static void main(String[] args) {
-        //String word = "AADDAFD";
         String word = "AADDAFD";
         String result = makePalindrome(word);
         System.out.println("result = " + result);
@@ -20,16 +19,47 @@ public class Task03 {
 
     /**
      * Рекурсивный метод превращающий входную строку в палиндром
+     *
      * @param word - входная строка - не палиндром
      * @return палиндром
      */
     public static String makePalindrome(String word) {
         //этот метод не подходит для рекупсивной функции, создадим свой
-        //кстати говоря указаный алгоритм не полностью подходит к этой задаче
-        int min = minNumberOfCharForPal(word);//круто конечно, но нашу задачу это не решает.
+        //кстати говоря указаный алгоритм не полностью подходит к этой задаче, но ок, сделаю и его
+        //int min = minNumberOfCharForPal(word);//круто конечно, но нашу задачу это не решает.
+        //кстати говоря тест на task 3 работал, но не правильно, expeption и actual не на своих местах.
+        //task 3 не учитывает то что палиндром максимальной длинны можно составить несколькими способами
+        //мой не прошел, пришлось переделывать с приоритетом на правый символ
 
-        return word;//заглушка
+        if (word.length() < 2) {
+            return word;
+        }
+        String h = word.substring(0, 1);
+        String t = word.substring(word.length() - 1);
+        String s = word.substring(1, word.length() - 1);
+        if (h.equals(t)) {
+            return h + makePalindrome(s) + t;
+        } else {
+            String a = makePalindrome(s + t);
+            String b = makePalindrome(h + s);
+            String c = makePalindrome(s);
+            //а как тут без такого нагромождения можно было бы записать?
+            if (a.length() >= b.length()) {//>= для теста
+                if (a.length() >= c.length()) {
+                    return a;
+                } else {
+                    return c;
+                }
+            } else {
+                if (b.length() > c.length()) {
+                    return b;
+                } else {
+                    return c;
+                }
+            }
+        }
     }
+/*
     public static int minNumberOfCharForPal(String word){
         //Если строка имеет вид hst где h и t символы, а s  — подстрока, возможно пустая
         //вот тут я не понял, нам надо созвавать новые строки или индекс смещать?
@@ -54,4 +84,5 @@ public class Task03 {
         //как записывать результаты в массив если у нас нет i, j?
         return min;
     }
+ */
 }
