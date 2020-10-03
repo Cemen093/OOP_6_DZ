@@ -17,7 +17,7 @@ import java.util.Random;
  *
  * Написать программу, которая позволит:
  * - выводить значения треугольника на консоль в таком виде как на рисунке;
- * - вычислять наибольшую с умму чисел, через которые проходит путь, начинающийся на вершине и
+ * - вычислять наибольшую сумму чисел, через которые проходит путь, начинающийся на вершине и
  * заканчивающийся где-то на основании.
  *
  * 1. Каждый шаг может идти диагонально вниз-направо или диагонально вниз-налево.
@@ -47,7 +47,18 @@ public class Task04 {
 			}
 		}
 
-		// TODO: пишите ваш код здесь
+		//Окей, теперь я понял что значит P(i, j),но возник другой вопрос, каким алгоритмом решать? первым или вторым?
+		printTriangle(triangle);//пример был для чисел до 9, но у нас до 100, адаптировать под двухзначные?
+		System.out.println(solve2(triangle, 0, 0));//первый алгоритм
+		for (int number : solve(triangle))
+		{
+			if (number == 0){
+				System.out.print("Left\n");
+			}
+			else{
+				System.out.print("Right\n");
+			}
+		}
 	}
 
 	/**
@@ -55,7 +66,23 @@ public class Task04 {
 	 * @param triangle - двумерный массив
 	 */
 	static void printTriangle(int[][] triangle) {
-		// TODO: ваш код здесь
+		//адапритую под двухзначные числа
+		//строка
+		for (int i = 0; i < triangle.length; i++) {
+			//Отступ
+			for (int j = 0; j < triangle.length - 1 - i; j++) {
+				System.out.print("  ");
+			}
+			//Числа
+			for (int j = 0; j < triangle[i].length; j++) {
+				if (triangle[i][j] < 10){//надо нет?
+					System.out.print(" ");
+				}
+				System.out.printf("%d  ", triangle[i][j]);
+			}
+			//переход на новую строку
+			System.out.print("\n");
+		}
 	}
 
 	/**
@@ -64,6 +91,48 @@ public class Task04 {
 	 * @return - путь от вершины до основания в котором сумма числе наибольшая
 	 */
 	static int[] solve(int[][] triangle) {
-		throw new RuntimeException("Not implemented yet");
+		//насколько я понял суть алгоритма, мы идем снизу вверх и переписываем значение элемента на
+		// макс суму чисел ниже него, записывать в тот же массив?
+		//не понял немного где тут должна быть рекурсивность и как её прикрутить к таким входным и выходным данным
+
+		boolean[][] allTheWay = new boolean[triangle.length - 1][];//0 лево 1 право
+		for (int i = 0; i < allTheWay.length; i++) {
+			allTheWay[i] = new boolean[i+1];
+		}
+		for (int i = triangle.length - 2; i > -1; i--) {
+			for (int j = 0; j < triangle[i].length; j++) {
+				if (triangle[i + 1][j] > triangle[i + 1][j + 1]){
+					triangle[i][j] += triangle[i + 1][j];
+					allTheWay[i][j] = true;
+				}
+				else{//если равно тоже идем в право
+					triangle[i][j] += triangle[i + 1][j+ 1];
+					allTheWay[i][j] = false;
+				}
+			}
+		}
+		//запишем лучший путь
+		int[] theBestWay = new int[allTheWay.length];
+		int j = 0;
+		for (int i = 0; i < allTheWay.length; i++) {
+			if (allTheWay[i][j]){
+				theBestWay[i] = 1;
+				j++;
+			}
+			else{
+				theBestWay[i] = 0;
+			}
+		}
+
+		System.out.println(triangle[0][0]);
+		return theBestWay;
+	}
+	static int solve2(int[][] triangle, int i, int j){
+		if (triangle.length - 1 > i) {
+			return triangle[i][j] + Math.max(solve2(triangle, (i + 1), j), solve2(triangle, (i + 1), (j + 1)));
+		}
+		else{
+			return triangle[i][j];
+		}
 	}
 }
