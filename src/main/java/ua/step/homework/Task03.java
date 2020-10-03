@@ -12,6 +12,7 @@ package ua.step.homework;
  */
 public class Task03 {
     public static void main(String[] args) {
+        //String word = "AADDAFD";
         String word = "AADDAFD";
         String result = makePalindrome(word);
         System.out.println("result = " + result);
@@ -23,7 +24,34 @@ public class Task03 {
      * @return палиндром
      */
     public static String makePalindrome(String word) {
-        // TODO: удалите исключение и пишите здесь код
-        throw new RuntimeException("Not implemented yet");
+        //этот метод не подходит для рекупсивной функции, создадим свой
+        //кстати говоря указаный алгоритм не полностью подходит к этой задаче
+        int min = minNumberOfCharForPal(word);//круто конечно, но нашу задачу это не решает.
+
+        return word;//заглушка
+    }
+    public static int minNumberOfCharForPal(String word){
+        //Если строка имеет вид hst где h и t символы, а s  — подстрока, возможно пустая
+        //вот тут я не понял, нам надо созвавать новые строки или индекс смещать?
+        if (word.length() < 2){
+            return 0;
+        }
+        String h = word.substring(0, 1);
+        String t = word.substring(word.length() - 1);
+        String s = word.substring(1, word.length() - 1);
+        int min;
+        if (h.equals(t)){
+            min = minNumberOfCharForPal(s);
+        }
+        else {
+            int a = minNumberOfCharForPal(s + t) + 1;
+            int b = minNumberOfCharForPal(h + s) + 1;
+            int c = minNumberOfCharForPal(s) + 2;
+            min = Math.min(a, Math.min(b,c));
+        }
+        //вот последний абзац алгоритма вообще не понятен, откуда взялись i,j если мы говорили про строки?
+        //от куда взялся двумерный массив если наша функция его не принимает и не возвращает?
+        //как записывать результаты в массив если у нас нет i, j?
+        return min;
     }
 }
