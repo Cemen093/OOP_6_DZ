@@ -1,5 +1,7 @@
 package ua.step.homework;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -47,18 +49,14 @@ public class Task04 {
 			}
 		}
 
-		//Окей, теперь я понял что значит P(i, j),но возник другой вопрос, каким алгоритмом решать? первым или вторым?
 		printTriangle(triangle);//пример был для чисел до 9, но у нас до 100, адаптировать под двухзначные?
-		System.out.println(solve2(triangle, 0, 0));//первый алгоритм
+		//System.out.println(solve2(triangle, 0, 0));//первый алгоритм намного проще
+		System.out.print("\nПуть с золотой горы : ");
 		for (int number : solve(triangle))
 		{
-			if (number == 0){
-				System.out.print("Left\n");
-			}
-			else{
-				System.out.print("Right\n");
-			}
+			System.out.printf("%d ", number);
 		}
+		System.out.println();
 	}
 
 	/**
@@ -92,47 +90,38 @@ public class Task04 {
 	 */
 	static int[] solve(int[][] triangle) {
 		//насколько я понял суть алгоритма, мы идем снизу вверх и переписываем значение элемента на
-		// макс суму чисел ниже него, записывать в тот же массив?
-		//не понял немного где тут должна быть рекурсивность и как её прикрутить к таким входным и выходным данным
+		//максимальную сумму элементов
 
-		boolean[][] allTheWay = new boolean[triangle.length - 1][];//0 лево 1 право
-		for (int i = 0; i < allTheWay.length; i++) {
-			allTheWay[i] = new boolean[i+1];
+		//массив для пути
+		int[] theWay = new int[triangle.length];
+		//массив для записи вычислений
+		//я сдаюсь, за час так и не смог скопировать какой то массив методами.
+		int[][] arr = new int[triangle.length][];
+		for (int i = 0; i < triangle.length - 1; i++) {
+			arr[i] = new int[i+1];
 		}
-		for (int i = triangle.length - 2; i > -1; i--) {
-			for (int j = 0; j < triangle[i].length; j++) {
-				if (triangle[i + 1][j] > triangle[i + 1][j + 1]){
-					triangle[i][j] += triangle[i + 1][j];
-					allTheWay[i][j] = true;
+		arr [triangle.length - 1] = Arrays.copyOf(triangle[triangle.length - 1], triangle[triangle.length - 1].length);
+		for (int i = arr.length - 2; i > -1; i--) {
+			for (int j = 0; j < arr[i].length; j++) {
+				if (arr[i + 1][j] > arr[i + 1][j + 1]){
+					arr[i][j] += arr[i + 1][j];
+					theWay[i + 1] = triangle[i + 1][j];
 				}
 				else{//если равно тоже идем в право
-					triangle[i][j] += triangle[i + 1][j+ 1];
-					allTheWay[i][j] = false;
+					arr[i][j] += arr[i + 1][j+ 1];
+					theWay[i + 1] = triangle[i + 1][j + 1];
 				}
 			}
 		}
-		//запишем лучший путь
-		int[] theBestWay = new int[allTheWay.length];
-		int j = 0;
-		for (int i = 0; i < allTheWay.length; i++) {
-			if (allTheWay[i][j]){
-				theBestWay[i] = 1;
-				j++;
-			}
-			else{
-				theBestWay[i] = 0;
-			}
-		}
-
-		System.out.println(triangle[0][0]);
-		return theBestWay;
+		theWay[0] = triangle[0][0];
+		return theWay;
 	}
-	static int solve2(int[][] triangle, int i, int j){
+	/*static int solve2(int[][] triangle, int i, int j){
 		if (triangle.length - 1 > i) {
 			return triangle[i][j] + Math.max(solve2(triangle, (i + 1), j), solve2(triangle, (i + 1), (j + 1)));
 		}
 		else{
 			return triangle[i][j];
 		}
-	}
+	}*/
 }
