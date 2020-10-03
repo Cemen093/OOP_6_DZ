@@ -1,5 +1,11 @@
 package ua.step.homework;
 
+
+import ua.step.homework.Task05Classes.Dragon;
+import ua.step.homework.Task05Classes.Spearman;
+
+import static ua.step.homework.Task05Classes.Interface.*;
+
 /**
  * В этом задании нет заготовленных методов.
  * Продумайте их самостоятельно.
@@ -41,6 +47,24 @@ package ua.step.homework;
  */
 public class Task05 {
 	public static void main(String[] args) {
-		// TODO: проверяйте ваш код здесь
+
+		//цикл нахождения мин копейшиков для победы
+		int i = 1;
+		int win = 0;
+		//ввод данных
+		int dragonHealth = Input("Здоровье дракона >> ", 1);
+		int dragonAttacks = Input("Атака дракона >> ", 1);
+		int oneSpearmanHealth = Input("Здоровье одного копейщика >> ", 1);
+		int oneSpearmanAttack = Input("Атака одного копейщика >> ", 1);
+
+		Dragon dragon = new Dragon();
+		Spearman spearman = new Spearman();
+
+		do {
+			//Итерация X
+			Iteration(i);
+			//симуляция боя
+
+		} while (win != 1);
 	}
 }
