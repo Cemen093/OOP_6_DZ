@@ -1,5 +1,7 @@
 package ua.step.homework;
 
+import java.util.Stack;
+
 /**
  *
  * Напишите метод, проверяющую правильность расстановки скобок в строке
@@ -19,7 +21,10 @@ package ua.step.homework;
  */
 public class Task06 {
 	public static void main(String[] args) {
-		// TODO: проверяйте ваш код здесь
+		System.out.printf("%d %d %d %d",(int) '(', (int) ')', (int) '[', (int) ']');
+		checkBrackets("( [ a) b]");
+		checkBrackets("(a[b](f[(g)(g)]))");
+		checkBrackets("(abc[a]y)xx[am](");
 	}
 
 	/**
@@ -27,6 +32,46 @@ public class Task06 {
 	 * @param str - входная строка со скобками
 	 */
 	static void checkBrackets(String str) {
-		throw new RuntimeException("Not implemented yet");
+
+		char ansver = '*';
+		Stack<Character> stack = new Stack<>();
+		for (int i = 0; i < str.length(); i++) {
+			//проверим строку на открытие скопок, и положим в стек если да + переход к следующему индексу строки
+			if (str.charAt(i) == '(' || str.charAt(i) == '['){
+				stack.push(str.charAt(i));
+				continue;
+			}
+			//Поверим строку на закрывающиеся скопки
+			if (str.charAt(i) == ')' || str.charAt(i) == ']'){
+				//удалим из стека если совпадает + переход к следующему индексу строки
+				if (stack.peek() == '(' && ')' == str.charAt(i)){
+					stack.pop();
+					continue;
+				}
+				if (stack.peek() == '[' && ']' == str.charAt(i)){
+					stack.pop();
+					continue;
+				}
+				// если не совпадает запоминаем ответ и выходим из цикла
+				if (str.charAt(i) == ')'){
+					ansver = '(';
+				}
+				else{
+					ansver = '[';
+				}
+				break;
+			}
+		}
+		//проверка что не пуст при не нахождении ошибки, если да запоминаем ответ
+		if (!stack.empty() && ansver == '*'){
+			if (stack.peek() == '('){ansver = ')';}
+			else{ansver = ']';}
+		}
+		//выводим ответ на экран
+		if (ansver == '*'){System.out.println("Правильная строка");}
+		else{System.out.println("Ошибка отсутствие " + ansver);}
+
+		//word.substring(0, 1);
+		//value = String.valueOf(0.5);
 	}
 }
