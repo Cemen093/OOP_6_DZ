@@ -3,7 +3,8 @@ package ua.step.homework.Task05Classes;
 public class Spearman {
     int attack;
     int health;
-    final int MAX_HEALTH = health;//ну вот вообще не уверен в том как это обявлять и где
+    int maxHealth;
+    //как бы MAX_HEALTH константой сделать? и где?
 
     public Spearman(){
 
@@ -12,6 +13,7 @@ public class Spearman {
     public Spearman(int _attack, int _health){
         attack = _attack;
         health = _health;
+        maxHealth = health;//ну вот вообще не уверен в том как это обявлять и где
     }
     public int getAttack(){
         return attack;
@@ -19,10 +21,25 @@ public class Spearman {
     public int getHealth(){
         return health;
     }
-    public void takesDamage(int damage){
-        health -= damage;
-    }
     public int getMaxHeat(){
-        return MAX_HEALTH;
+        return maxHealth;
+    }
+    public void takesDamage(int damage){
+        if (damage <= health){
+        health -= damage;
+        }
+        else{
+            health = 0;
+        }
+    }
+    public int takingDamageAndReturningRest(int damage){
+        if (health < damage){
+            int tmp = health;
+            health = 0;
+            return damage - tmp;}
+        else{
+            health -= damage;
+            return 0;
+        }
     }
 }
