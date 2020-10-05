@@ -39,8 +39,7 @@ public class Task01 {
 	 * @return нулевую матрицу
 	 */
 	public static int[][] createNull (int n, int m) {
-		int[][] arr = new int[n][m];
-		return arr;
+		return new int[n][m]; // можно упростить
 	}
 
 	/**
@@ -129,6 +128,7 @@ public class Task01 {
 	 * @param matrix - матрица
 	 */
 	public static void printMatrix(int[][] matrix) {
+		// Не верное решение. Что мы увидим в консоли?
 		System.out.println(matrix);
 	}
 }

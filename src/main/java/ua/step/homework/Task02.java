@@ -27,12 +27,8 @@ public class Task02 {
      * @return строка состоящая из элементов массив
      */
     public static String join(String[] strings) {
-        String s = new String();
-        for (int i = 0; i < strings.length - 1; i++) {
-            s += strings[i] + " ";
-        }
-        s += strings[strings.length - 1];
-        return s;
+        // здесь можно использовать повторно  метод join
+        return join(strings, " ");
     }
 
     /**
@@ -43,7 +39,7 @@ public class Task02 {
      * @return строка состоящая из элементов массива
      */
     public static String join(String[] strings, String glue) {
-        String s = new String();
+        String s = "";// не нужно создавать строку через new String()
         for (int i = 0; i < strings.length - 1; i++) {
             s += strings[i] + glue;
         }
